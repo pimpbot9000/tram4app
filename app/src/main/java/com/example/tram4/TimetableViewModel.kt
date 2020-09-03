@@ -19,13 +19,13 @@ class TimetableViewModel : ViewModel() {
     private var timer: Timer? = null
     private val compositeDisposable = CompositeDisposable()
 
-    private val timetable: MutableLiveData<List<DepartureInfo>> by lazy {
-        MutableLiveData<List<DepartureInfo>>().also {
+    private val timetable: MutableLiveData<Timetable> by lazy {
+        MutableLiveData<Timetable>().also {
 
         }
     }
 
-    fun getTimeTable(): LiveData<List<DepartureInfo>> {
+    fun getTimeTable(): LiveData<Timetable> {
         return timetable
     }
 
@@ -33,9 +33,10 @@ class TimetableViewModel : ViewModel() {
         Log.d("JEEJEE", "data updated")
         compositeDisposable.clear()
         val d = tramService.getService().getTimeTable().subscribe({ result ->
-            timetable.postValue(result)
+            val newTimeTable = Timetable(result, "OK")
+            timetable.postValue(newTimeTable)
         }, { throwable ->
-            Log.d("JEEJEE", throwable.message)
+            timetable.postValue(Timetable(listOf(), throwable.message ?: "unknown error"))
         }
 
         )
