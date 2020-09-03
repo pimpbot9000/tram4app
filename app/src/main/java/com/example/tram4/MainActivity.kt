@@ -7,7 +7,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.os.Handler
 import android.os.Looper
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
@@ -44,17 +43,23 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
+    override fun onStart(){
+        super.onStart()
+        Log.d("JEEJEE", "onStart")
+        timetableModelRef.refreshTimeTable()
+        timetableModelRef.resumeUpdate()
+
+    }
+
     override fun onStop() {
         super.onStop()
         Log.d("JEEJEE", "onStop")
-        timetableModelRef?.pauseUpdate()
+        timetableModelRef.pauseUpdate()
 
     }
 
     override fun onResume() {
         super.onResume()
-        timetableModelRef?.fetchData()
-        timetableModelRef?.resumeUpdate()
         Log.d("JEEJEE", "onResume")
     }
 
@@ -71,9 +76,6 @@ class MainActivity : AppCompatActivity() {
 
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
             R.id.action_settings -> {
                 Log.d("JEEJEE", "hello")
