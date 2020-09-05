@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">Nelosen spora</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_settings">Asetukset</string>
+
+    <!-- Preference Titles -->
+    <string name="stops_header">Valitse pysäkki</string>
+    <string name="stops_title">Pysäkki</string>
+    <string name="default_stop">alepa</string>
+
 </resources>

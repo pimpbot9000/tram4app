@@ -1,6 +1,6 @@
-package com.example.tram4.mainactivity
+package com.example.tram4.main_activity
 
-import android.util.Log
+
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,6 +13,7 @@ class TimetableViewModel : ViewModel() {
 
     private val tramService: TramService = TramService()
     private val compositeDisposable = CompositeDisposable()
+    private var stop: String? = null
     private val timer = SensibleTimer(5000L){
         refreshTimeTable()
     }
@@ -26,9 +27,19 @@ class TimetableViewModel : ViewModel() {
     }
 
     fun refreshTimeTable() {
-        Log.d("JEEJEE", "data updated")
+
+        if(stop == null){ //should never happend
+            timetable.postValue(
+                Timetable(
+                    listOf(),
+                    "Pysäkkiä ei asetettu"
+                )
+            )
+            return
+        }
+
         compositeDisposable.clear()
-        val d = tramService.getService().getTimeTable("portti").subscribe({ result ->
+        val d = tramService.getService().getTimeTable(stop!!).subscribe({ result ->
             val newTimeTable = Timetable(result, "OK")
             timetable.postValue(newTimeTable)
         }, { throwable ->
@@ -48,9 +59,14 @@ class TimetableViewModel : ViewModel() {
 
     fun pauseUpdate() = timer.stopTimer()
 
+    fun setStop(stop: String){
+        this.stop = stop
+    }
+
     override fun onCleared() {
         compositeDisposable.clear()
         super.onCleared()
     }
+
 }
 

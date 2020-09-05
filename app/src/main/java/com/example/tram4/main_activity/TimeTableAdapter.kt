@@ -1,4 +1,4 @@
-package com.example.tram4.mainactivity
+package com.example.tram4.main_activity
 
 import android.view.LayoutInflater
 import android.view.View

@@ -1,5 +1,7 @@
-package com.example.tram4.mainactivity
+package com.example.tram4.main_activity
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -10,11 +12,14 @@ import android.os.Looper
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tram4.R
+import com.example.tram4.settings_activity.SettingsActivity
 
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.prefs.Preferences
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,6 +34,8 @@ class MainActivity : AppCompatActivity() {
 
         val timetableModel: TimetableViewModel by viewModels()
         timetableModelRef = timetableModel
+
+
 
         timetableModel.getTimeTable().observe(this, Observer<Timetable> { timetable ->
 
@@ -48,7 +55,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        Log.d("JEEJEE", "onStart")
+        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
+        val stop = prefs.getString("stop", resources.getString(R.string.default_stop))
+
+        timetableModelRef.setStop(stop!!)
         timetableModelRef.refreshTimeTable()
         timetableModelRef.resumeUpdate()
 
@@ -81,7 +91,8 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_settings -> {
-                // TODO: open settings
+                val intent = Intent(this, SettingsActivity::class.java)
+                startActivity(intent)
                 true
             }
             else -> super.onOptionsItemSelected(item)
