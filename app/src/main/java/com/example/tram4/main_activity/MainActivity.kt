@@ -9,6 +9,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.os.Handler
 import android.os.Looper
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tram4.R
 import com.example.tram4.settings_activity.SettingsActivity
+import com.example.tram4.utils.StringUtils
 
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.prefs.Preferences
@@ -24,6 +26,7 @@ import java.util.prefs.Preferences
 class MainActivity : AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
+    private lateinit var stopTextView: TextView
     private lateinit var timetableModelRef: TimetableViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,6 +34,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
         recyclerView = findViewById(R.id.recycler_view)
+        stopTextView = findViewById(R.id.stop_text_view)
 
         val timetableModel: TimetableViewModel by viewModels()
         timetableModelRef = timetableModel
@@ -57,7 +61,9 @@ class MainActivity : AppCompatActivity() {
         super.onStart()
         val prefs = PreferenceManager.getDefaultSharedPreferences(this)
         val stop = prefs.getString("stop", resources.getString(R.string.default_stop))
+        val map = StringUtils.parseStringArrayAsMap(this, R.array.stops_map)
 
+        stopTextView.text = map.get(stop)
         timetableModelRef.setStop(stop!!)
         timetableModelRef.refreshTimeTable()
         timetableModelRef.resumeUpdate()

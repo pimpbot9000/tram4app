@@ -17,7 +17,6 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory app:title="@string/stops_header">
-
         <ListPreference
             app:defaultValue="@string/default_stop"
             app:entries="@array/stop_entries"

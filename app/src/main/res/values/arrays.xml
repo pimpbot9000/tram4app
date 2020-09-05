@@ -1,5 +1,5 @@
 <resources>
-    <!-- Reply Preference -->
+    <!-- Choose stop -->
     <string-array name="stop_entries">
         <item>Muncan portti (Munkkiniemen puistotie)</item>
         <item>Alepa (Laajalahden aukio)</item>
@@ -10,5 +10,11 @@
         <item>portti</item>
         <item>alepa</item>
         <item>paattari</item>
+    </string-array>
+
+    <string-array name="stops_map">
+        <item>portti|Munkkiniemen puistotie</item>
+        <item>alepa|Laajalahden aukio</item>
+        <item>paattari|Saunalahdentie</item>
     </string-array>
 </resources>
