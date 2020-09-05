@@ -1,4 +1,4 @@
-package com.example.tram4
+package com.example.tram4.mainactivity
 
 import android.os.Bundle
 import android.util.Log
@@ -12,7 +12,7 @@ import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.tram4.api.models.DepartureInfo
+import com.example.tram4.R
 
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -81,7 +81,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_settings -> {
-                Log.d("JEEJEE", "hello")
+                // TODO: open settings
                 true
             }
             else -> super.onOptionsItemSelected(item)

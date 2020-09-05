@@ -1,4 +1,4 @@
-package com.example.tram4
+package com.example.tram4.mainactivity
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -28,11 +28,16 @@ class TimetableViewModel : ViewModel() {
     fun refreshTimeTable() {
         Log.d("JEEJEE", "data updated")
         compositeDisposable.clear()
-        val d = tramService.getService().getTimeTable().subscribe({ result ->
+        val d = tramService.getService().getTimeTable("portti").subscribe({ result ->
             val newTimeTable = Timetable(result, "OK")
             timetable.postValue(newTimeTable)
         }, { throwable ->
-            timetable.postValue(Timetable(listOf(), throwable.message ?: "unknown error"))
+            timetable.postValue(
+                Timetable(
+                    listOf(),
+                    throwable.message ?: "unknown error"
+                )
+            )
         }
 
         )

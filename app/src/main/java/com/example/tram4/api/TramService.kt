@@ -15,9 +15,9 @@ class TramService{
 
         val client = OkHttpClient()
         client.newBuilder()
-            .connectTimeout(10000, TimeUnit.SECONDS)
-            .writeTimeout(10000, TimeUnit.SECONDS)
-            .readTimeout(10000, TimeUnit.SECONDS).build()
+            .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
+            .writeTimeout(TIMEOUT, TimeUnit.SECONDS)
+            .readTimeout(TIMEOUT, TimeUnit.SECONDS).build()
 
         val retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
@@ -37,7 +37,7 @@ class TramService{
     }
 
     companion object {
-        //api entry point
+        private const val TIMEOUT = 10L
         private const val BASE_URL = "https://tram-4-service.herokuapp.com"
     }
 }

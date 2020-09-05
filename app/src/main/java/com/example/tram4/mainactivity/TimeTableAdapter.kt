@@ -1,4 +1,4 @@
-package com.example.tram4
+package com.example.tram4.mainactivity
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
+import com.example.tram4.R
 import com.example.tram4.api.models.DepartureInfo
 
 class TimeTableAdapter(private var departures: List<DepartureInfo>) : RecyclerView.Adapter<TimeTableAdapter.DepartureViewHolder>(){
