@@ -72,19 +72,19 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStop() {
         super.onStop()
-        Log.d("JEEJEE", "onStop")
+        Log.d(TAG, "onStop")
         timetableModelRef.pauseUpdate()
 
     }
 
     override fun onResume() {
         super.onResume()
-        Log.d("JEEJEE", "onResume")
+        Log.d(TAG, "onResume")
     }
 
     override fun onRestart() {
         super.onRestart()
-        Log.d("JEEJEE", "onRestart")
+        Log.d(TAG, "onRestart")
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -109,5 +109,9 @@ class MainActivity : AppCompatActivity() {
         Handler(Looper.getMainLooper()).post {
             Toast.makeText(applicationContext, message, Toast.LENGTH_LONG).show()
         }
+    }
+
+    companion object{
+        private const val TAG = "MainActivity"
     }
 }

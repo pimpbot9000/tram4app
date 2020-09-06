@@ -29,7 +29,7 @@ class TimetableViewModel : ViewModel() {
 
     fun refreshTimeTable() {
 
-        if(stop == null){ //should never happend
+        if(stop == null){ //should never happen
             timetable.postValue(
                 Timetable(
                     listOf(),
