@@ -1,6 +1,7 @@
 package com.example.tram4
 
 import com.example.tram4.api.Tram4api
+import com.example.tram4.api.TramService
 import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse
@@ -26,16 +27,9 @@ class RetrofitTest{
 
         System.setProperty("javax.net.ssl.trustStoreType", "JKS") // Some hack found from internet to make MockWebServer Work.
         mockWebServer = MockWebServer()
+        val url = mockWebServer.url("/")
+        apiService = TramService(url).getService()
 
-        val client = OkHttpClient()
-        client.newBuilder().build()
-
-        apiService = Retrofit.Builder()
-            .baseUrl(mockWebServer!!.url("/"))
-            .client(client)
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
-            .addConverterFactory(GsonConverterFactory.create())
-            .build().create(Tram4api::class.java)
     }
     @After
     fun teardown(){

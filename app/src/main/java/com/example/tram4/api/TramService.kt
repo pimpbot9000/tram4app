@@ -1,13 +1,14 @@
 package com.example.tram4.api
 
 import io.reactivex.schedulers.Schedulers
+import okhttp3.HttpUrl
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-class TramService{
+class TramService(baseUrl: HttpUrl){
 
     private val mTramService: Tram4api
 
@@ -20,7 +21,7 @@ class TramService{
             .readTimeout(TIMEOUT, TimeUnit.SECONDS).build()
 
         val retrofit = Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(baseUrl)
             .client(client)
             .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
             .addConverterFactory(GsonConverterFactory.create())
@@ -38,6 +39,6 @@ class TramService{
 
     companion object {
         private const val TIMEOUT = 10L
-        private const val BASE_URL = "https://tram-4-service.herokuapp.com"
+        const val BASE_URL = "https://tram-4-service.herokuapp.com"
     }
 }

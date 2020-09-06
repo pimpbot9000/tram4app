@@ -7,11 +7,12 @@ import androidx.lifecycle.ViewModel
 import com.example.tram4.api.TramService
 import com.example.tram4.utils.SensibleTimer
 import io.reactivex.disposables.CompositeDisposable
+import okhttp3.HttpUrl
 
 
 class TimetableViewModel : ViewModel() {
 
-    private val tramService: TramService = TramService()
+    private val tramService: TramService = TramService(HttpUrl.parse(TramService.BASE_URL)!!)
     private val compositeDisposable = CompositeDisposable()
     private var stop: String? = null
     private val timer = SensibleTimer(5000L){
