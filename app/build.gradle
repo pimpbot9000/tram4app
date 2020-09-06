@@ -29,6 +29,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
 }
 
 def retrofit_version = "2.5.0"
@@ -37,8 +42,10 @@ def rxJava_version = "2.2.6"
 def okHttp_version = "3.12.1"
 
 dependencies {
-    testImplementation "com.squareup.okhttp3:mockwebserver:$okHttp_version"
+
     implementation "com.squareup.okhttp3:okhttp:$okHttp_version"
+    testImplementation "com.squareup.okhttp3:mockwebserver:$okHttp_version"
+    testImplementation 'org.robolectric:robolectric:4.3.1'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.fragment:fragment-ktx:1.2.5'
@@ -54,5 +61,6 @@ dependencies {
     implementation 'androidx.preference:preference:1.1.1'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'
+    androidTestImplementation 'androidx.test:rules:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 }

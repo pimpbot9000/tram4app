@@ -1,0 +1,103 @@
+package com.example.tram4
+
+import com.example.tram4.api.Tram4api
+import io.reactivex.schedulers.Schedulers
+import okhttp3.OkHttpClient
+import okhttp3.mockwebserver.MockResponse
+import okhttp3.mockwebserver.MockWebServer
+import org.junit.After
+import org.junit.Before
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
+import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+import retrofit2.converter.gson.GsonConverterFactory
+import java.net.HttpURLConnection
+
+@RunWith(RobolectricTestRunner::class)
+class RetrofitTest{
+
+    private lateinit var mockWebServer: MockWebServer
+    private lateinit var apiService: Tram4api
+
+    @Before
+    fun setup(){
+
+        System.setProperty("javax.net.ssl.trustStoreType", "JKS") // Some hack found from internet to make MockWebServer Work.
+        mockWebServer = MockWebServer()
+
+        val client = OkHttpClient()
+        client.newBuilder().build()
+
+        apiService = Retrofit.Builder()
+            .baseUrl(mockWebServer!!.url("/"))
+            .client(client)
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
+            .addConverterFactory(GsonConverterFactory.create())
+            .build().create(Tram4api::class.java)
+    }
+    @After
+    fun teardown(){
+        mockWebServer.shutdown()
+    }
+
+    @Test
+    fun test(){
+        val response = MockResponse().setResponseCode(HttpURLConnection.HTTP_OK)
+            .setBody(queryResponse)
+
+        mockWebServer.enqueue(response)
+
+        val timetable = apiService.getTimeTable("alepa").blockingGet()
+        val firstResult = timetable[0]
+
+        assert(timetable.size == 5)
+        assert(firstResult.departureInMinutes == 2)
+        assert(firstResult.description == "Katajanokka via Meilahti")
+        assert(firstResult.route == "4")
+    }
+
+    companion object{
+        const val queryResponse = """
+        [
+        {
+            "departureInMinutes": 2,
+            "departureInSeconds": 106,
+            "description": "Katajanokka via Meilahti",
+            "sign": "Katajanokka",
+            "route": "4"
+        },
+        {
+            "departureInMinutes": 13,
+            "departureInSeconds": 800,
+            "description": "Katajanokka via Meilahti",
+            "sign": "Katajanokka",
+            "route": "4"
+        },
+        {
+            "departureInMinutes": 25,
+            "departureInSeconds": 1520,
+            "description": "Katajanokka via Meilahti",
+            "sign": "Katajanokka",
+            "route": "4"
+        },
+        {
+            "departureInMinutes": 37,
+            "departureInSeconds": 2240,
+            "description": "Katajanokka via Meilahti",
+            "sign": "Katajanokka",
+            "route": "4"
+        },
+        {
+            "departureInMinutes": 49,
+            "departureInSeconds": 2960,
+            "description": "Katajanokka via Meilahti",
+            "sign": "Katajanokka",
+            "route": "4"
+        }
+        ]"""
+
+    }
+}
+

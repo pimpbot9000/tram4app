@@ -1,21 +1,21 @@
 package com.example.tram4
 
+import android.util.Log
 import androidx.test.platform.app.InstrumentationRegistry
-import androidx.test.runner.AndroidJUnit4
 import com.example.tram4.utils.StringUtils
 
 import org.junit.Test
 import org.junit.runner.RunWith
 
 import org.junit.Assert.*
+import org.robolectric.RobolectricTestRunner
 
 /**
  * Instrumented test, which will execute on an Android device.
  *
  * See [testing documentation](http://d.android.com/tools/testing).
  */
-@RunWith(AndroidJUnit4::class)
-
+@RunWith(RobolectricTestRunner::class)
 class StringUtilsTest {
 
     @Test
