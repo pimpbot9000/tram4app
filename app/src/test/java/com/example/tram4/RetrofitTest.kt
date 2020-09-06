@@ -15,6 +15,7 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.net.HttpURLConnection
+import java.util.concurrent.TimeUnit
 
 @RunWith(RobolectricTestRunner::class)
 class RetrofitTest{
@@ -37,19 +38,29 @@ class RetrofitTest{
     }
 
     @Test
-    fun test(){
+    fun testParsing(){
         val response = MockResponse().setResponseCode(HttpURLConnection.HTTP_OK)
             .setBody(queryResponse)
 
         mockWebServer.enqueue(response)
 
-        val timetable = apiService.getTimeTable("alepa").blockingGet()
-        val firstResult = timetable[0]
+        val timeTableResult = apiService.getTimeTable("alepa").blockingGet()
+        val firstResult = timeTableResult[0]
 
-        assert(timetable.size == 5)
+        assert(timeTableResult.size == 5)
         assert(firstResult.departureInMinutes == 2)
         assert(firstResult.description == "Katajanokka via Meilahti")
         assert(firstResult.route == "4")
+    }
+
+    @Test
+    fun testNetworkDelay(){
+        val response = MockResponse().setResponseCode(HttpURLConnection.HTTP_OK)
+            .setBody(queryResponse).setBodyDelay(5L, TimeUnit.SECONDS)
+        mockWebServer.enqueue(response)
+        val timeTableResult = apiService.getTimeTable("alepa").blockingGet()
+        assert(timeTableResult.size == 5)
+
     }
 
     companion object{
