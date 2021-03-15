@@ -4,17 +4,20 @@
         <item>Muncan portti (Munkkiniemen puistotie)</item>
         <item>Alepa (Laajalahden aukio)</item>
         <item>Päättäri (Saunalahdentie)</item>
+        <item>Kadettikoulu (Tiilimäki)</item>
     </string-array>
 
     <string-array name="stop_values">
         <item>portti</item>
         <item>alepa</item>
         <item>paattari</item>
+        <item>kadetti</item>
     </string-array>
 
     <string-array name="stops_map">
         <item>portti|Munkkiniemen puistotie</item>
         <item>alepa|Laajalahden aukio</item>
         <item>paattari|Saunalahdentie</item>
+        <item>kadetti|Kadettikoulu</item>
     </string-array>
 </resources>
