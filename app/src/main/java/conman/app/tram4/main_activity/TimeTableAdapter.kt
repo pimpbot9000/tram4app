@@ -3,6 +3,7 @@ package conman.app.tram4.main_activity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.DiffUtil
@@ -53,12 +54,24 @@ class TimeTableAdapter(private var departures: List<DepartureInfo>) : RecyclerVi
         private val route = view.findViewById<TextView>(R.id.tram_route)
         private val sign = view.findViewById<TextView>(R.id.tram_sign)
         private val departureTime = view.findViewById<TextView>(R.id.departure_time)
-        private var id: String? = null
+        private val redLight = view.findViewById<ImageView>(R.id.red_light)
+
 
         fun bind(departureInfo: DepartureInfo){
-            route.text = departureInfo.route
-            sign.text = departureInfo.sign
+            if(route.text != departureInfo.route) {
+                route.text = departureInfo.route
+            }
+            if(sign.text !=  departureInfo.sign) {
+                sign.text = departureInfo.sign
+            }
             departureTime.text = "${departureInfo.departureInMinutes} min"
+
+            if(departureInfo.departureInMinutes == 0){
+                redLight.visibility = View.VISIBLE
+                redLight.startAnimation(AnimationUtils.getAnimation())
+            } else {
+                redLight.visibility = View.GONE
+            }
         }
 
 
