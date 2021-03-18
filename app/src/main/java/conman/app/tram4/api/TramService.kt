@@ -30,9 +30,7 @@ class TramService(baseUrl: HttpUrl){
         mTramService = retrofit.create(Tram4api::class.java)
     }
 
-    /**
-     * Return the API for zenderdata
-     */
+
     fun getService(): Tram4api {
         return mTramService
     }

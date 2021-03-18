@@ -17,6 +17,15 @@ data class DepartureInfo(
     val sign: String,
 
     @field:SerializedName("route")
-    val route: String
+    val route: String,
 
-)
+    @field:SerializedName("stopId")
+    val stopId: String,
+
+    @field:SerializedName("tripId")
+    val tripId: String
+
+){
+    fun getId() = tripId.plus(stopId)
+}
+

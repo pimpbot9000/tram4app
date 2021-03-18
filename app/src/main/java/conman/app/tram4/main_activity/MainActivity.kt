@@ -46,10 +46,7 @@ class MainActivity : AppCompatActivity() {
             } else if (recyclerView.adapter == null) {
                 recyclerView.apply {
                     layoutManager = LinearLayoutManager(context)
-                    adapter =
-                        TimeTableAdapter(
-                            timetable.departures
-                        )
+                    adapter = TimeTableAdapter(timetable.departures)
                 }
             } else {
                 (recyclerView.adapter as TimeTableAdapter).update(timetable.departures)
