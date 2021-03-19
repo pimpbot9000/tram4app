@@ -61,13 +61,12 @@
         android:id="@+id/red_light"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
         android:layout_marginEnd="8dp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/departure_time"
         app:layout_constraintEnd_toStartOf="@+id/departure_time"
         app:layout_constraintTop_toTopOf="@+id/departure_time"
-        app:srcCompat="@drawable/red_light"
+        app:srcCompat="@drawable/run_for_it_2"
         tools:visibility="visible" />
 
 
